@@ -13,8 +13,8 @@ export function SiteShell({ children }: { children: ReactNode }) {
 					</span>
 				</Link>
 				<nav aria-label="主导航">
-					<Link to="/#collections">任务清单</Link>
-					<Link to="/#skills">Skills</Link>
+					<Link to="/discover">发现</Link>
+					<Link to="/library">我的 Skills</Link>
 					<Link to="/guides/workbuddy">怎么安装</Link>
 					<a href="https://github.com/Kris77z/skills-curator" target="_blank" rel="noreferrer">
 						GitHub ↗
@@ -28,9 +28,9 @@ export function SiteShell({ children }: { children: ReactNode }) {
 					<p>独立中文解释与体验判断；Skill 原始版权归各自作者。</p>
 				</div>
 				<div className="footer-links">
-					<Link to="/guides/codex">Codex</Link>
-					<Link to="/guides/claude">Claude Code</Link>
-					<Link to="/guides/workbuddy">WorkBuddy</Link>
+					<Link to="/discover">发现</Link>
+					<Link to="/library">我的 Skills</Link>
+					<Link to="/guides/workbuddy">使用指南</Link>
 				</div>
 			</footer>
 		</div>

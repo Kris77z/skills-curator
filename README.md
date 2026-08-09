@@ -11,11 +11,14 @@
 
 ## v0.1 范围
 
-- 任务优先的首页与 3 份组合清单
+- 中文落地页、发现页与 3 份任务组合清单
+- 浏览器本地“我的 Skills”资源库，支持已收录、想尝试、已使用和收藏状态
 - 5 个完整中文评测 + 1 个快速收录
 - Codex、Claude Code、WorkBuddy 三套使用指南
 - 可追溯的 GitHub 来源、固定 Commit 与 License
 - 本地匿名“开始使用 / 有效 / 部分有效 / 没效果”反馈闭环
+
+首版是一个纯 Web 资源整合产品：不扫描 Codex、Claude Code、WorkBuddy 等本地目录，不检测安装状态，也不把网页包装成本地 Skill 管理器。资源状态暂时只保存在当前浏览器中。
 
 完整的定位、内容模型、验证方案与风险边界见 [`docs/product-concept-v0.2.docx`](./docs/product-concept-v0.2.docx)。
 
@@ -36,9 +39,11 @@ npm run build
 
 网站位于 `apps/web`，使用 React Router 7、React 19、Tailwind CSS 4 和 Cloudflare Workers。策展数据集中在 `apps/web/src/data/catalog.ts`，方便后续替换为真实内容或后台数据。
 
-## 部署
+## 部署（暂缓）
 
 `apps/web/wrangler.jsonc` 已移除上游项目的域名、数据库和限流绑定，只保留此 Fork 所需的最小 Cloudflare Workers 配置。
+
+当前阶段仅供本地验收，尚未部署。后续确认版本后可运行：
 
 ```bash
 npm run deploy

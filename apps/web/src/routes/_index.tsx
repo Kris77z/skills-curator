@@ -31,8 +31,8 @@ export default function Home() {
 						我把 GitHub 上值得看的 AI Skills 翻成你能判断的中文：它能帮什么、适合谁、有什么坑，以及第一次怎么用。
 					</p>
 					<div className="hero-actions">
-						<a className="primary-button" href="#collections">按任务开始</a>
-						<a className="secondary-button" href="#skills">直接看 Skills</a>
+						<Link className="primary-button" to="/discover">进入发现页</Link>
+						<Link className="secondary-button" to="/library">打开我的 Skills</Link>
 					</div>
 				</div>
 				<aside className="curator-note">
@@ -48,9 +48,9 @@ export default function Home() {
 			</section>
 
 			<section className="promise-strip" aria-label="内容承诺">
+				<span>发现与资源管理一体</span>
 				<span>每个来源可追溯</span>
-				<span>不把收藏数当效果</span>
-				<span>明确写不适合谁</span>
+				<span>不扫描本机目录</span>
 				<span>体验结论与原文分开</span>
 			</section>
 
@@ -90,6 +90,7 @@ export default function Home() {
 				<div className="skill-grid">
 					{visibleSkills.map((skill) => <SkillCard skill={skill} key={skill.slug} />)}
 				</div>
+				<div className="section-more"><Link className="secondary-button" to="/discover">打开完整发现页 →</Link></div>
 			</section>
 
 			<section className="method-section">

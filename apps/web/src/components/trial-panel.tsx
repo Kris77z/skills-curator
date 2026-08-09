@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { toolNames, type SkillEntry, type ToolId } from "~/data/catalog";
 import { getPreferredTool, saveEvent, savePreferredTool, type TrialResult } from "~/lib/feedback";
+import { setLibraryStatus } from "~/lib/library";
 import { ToolPicker } from "./tool-picker";
 
 export function TrialPanel({ skill }: { skill: SkillEntry }) {
@@ -26,6 +27,7 @@ export function TrialPanel({ skill }: { skill: SkillEntry }) {
 
 	function startTrial() {
 		saveEvent({ skillSlug: skill.slug, tool, type: "started", at: new Date().toISOString() });
+		setLibraryStatus(skill.slug, "trying");
 		setStarted(true);
 	}
 
@@ -38,6 +40,7 @@ export function TrialPanel({ skill }: { skill: SkillEntry }) {
 			note: note.trim() || undefined,
 			at: new Date().toISOString(),
 		});
+		setLibraryStatus(skill.slug, "used");
 		setSubmitted(true);
 	}
 

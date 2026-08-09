@@ -1,6 +1,7 @@
 import { Link, useParams, type MetaFunction } from "react-router";
 import { SiteShell } from "~/components/site-shell";
 import { TrialPanel } from "~/components/trial-panel";
+import { LibraryActions } from "~/components/library-actions";
 import { getSkill, skills } from "~/data/catalog";
 
 export const meta: MetaFunction = ({ params }) => {
@@ -28,6 +29,7 @@ export default function SkillDetail() {
 						<h1>{skill.cnName}</h1>
 						<code>{skill.name}</code>
 						<p className="detail-tagline">{skill.tagline}</p>
+						<LibraryActions skill={skill} />
 					</div>
 					<aside className="verdict-card">
 						<span>Jungle 的判断</span>
