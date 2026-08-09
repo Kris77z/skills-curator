@@ -1,153 +1,58 @@
-<p align="center">
-  <img src="apps/web/public/favicon.svg" width="96" height="96" alt="SkillsGate" />
-</p>
+# Jungle 的 Skills 清单
 
-<h1 align="center">SkillsGate</h1>
+面向设计师、产品经理和其他非开发者的中文 AI Skills 策展网站。
 
-<p align="center">Visual skill manager for AI agents. Desktop app and TUI.</p>
+它不追求收录最多，而是回答四个更实际的问题：
 
-<p align="center">
-  <a href="https://skillsgate.ai">Website</a>
-</p>
+- 这个 Skill 能帮我完成什么？
+- 它适不适合我现在的任务？
+- 第一次应该怎么使用？
+- 有人真实用过以后，结果到底怎么样？
 
-<p align="center">
-  <img src="https://img.shields.io/npm/v/skillsgate?color=a8a29e&label=npm" alt="npm version" />
-  <img src="https://img.shields.io/badge/powered_by-skills.sh-a8a29e" alt="powered by skills.sh" />
-  <img src="https://img.shields.io/badge/agents-20-a8a29e" alt="20 agents" />
-  <img src="https://img.shields.io/badge/license-MIT-a8a29e" alt="MIT license" />
-</p>
+## v0.1 范围
 
-<p align="center">
-  <img src="docs/desktop-screenshot.png" width="720" alt="SkillsGate Desktop App" />
-</p>
+- 中文落地页、发现页与 3 份任务组合清单
+- 浏览器本地“我的 Skills”资源库，支持已收录、想尝试、已使用和收藏状态
+- 5 个完整中文评测 + 1 个快速收录
+- Codex、Claude Code、WorkBuddy 三套使用指南
+- 可追溯的 GitHub 来源、固定 Commit 与 License
+- 本地匿名“开始使用 / 有效 / 部分有效 / 没效果”反馈闭环
 
----
+首版是一个纯 Web 资源整合产品：不扫描 Codex、Claude Code、WorkBuddy 等本地目录，不检测安装状态，也不把网页包装成本地 Skill 管理器。资源状态暂时只保存在当前浏览器中。
 
-## What is SkillsGate?
+完整的定位、内容模型、验证方案与风险边界见 [`docs/product-concept-v0.2.docx`](./docs/product-concept-v0.2.docx)。
 
-SkillsGate lets you browse, install, and manage AI agent skills from a single interface. It works with 20+ agents and integrates [skills.sh](https://skills.sh) for public skill discovery.
+首批示例内容来自 [`anthropics/skills`](https://github.com/anthropics/skills)，每个 Skill 都单独核对并展示其许可。中文解释和体验判断为本项目的独立策展内容。
 
-Instead of hunting through GitHub repos and copying markdown files by hand, you open SkillsGate, search for what you need, and install it to any combination of agents with one click.
-
-Available as a **desktop app** (macOS, Windows, Linux) and a **terminal UI** for keyboard-driven workflows.
-
-## Quick Start
-
-### Desktop App
-
-Download for your platform:
-
-[macOS (Apple Silicon)](https://github.com/skillsgate/skillsgate/releases/latest) &middot; [macOS (Intel)](https://github.com/skillsgate/skillsgate/releases/latest) &middot; [Windows](https://github.com/skillsgate/skillsgate/releases/latest) &middot; [Linux](https://github.com/skillsgate/skillsgate/releases/latest)
-
-### TUI (Terminal UI)
+## 本地开发
 
 ```bash
-npx skillsgate
+npm install --ignore-scripts
+npm run dev -w apps/web
 ```
 
-Or install globally:
+生产构建：
 
 ```bash
-npm install -g skillsgate
+npm run build
 ```
 
-<p align="center">
-  <img src="docs/tui-screenshot.png" width="720" alt="SkillsGate TUI" />
-</p>
+网站位于 `apps/web`，使用 React Router 7、React 19、Tailwind CSS 4 和 Cloudflare Workers。策展数据集中在 `apps/web/src/data/catalog.ts`，方便后续替换为真实内容或后台数据。
 
-## Supported Agents
+## 部署（暂缓）
 
-Claude Code, Cursor, Windsurf, GitHub Copilot, Cline, Continue, Codex CLI, Droid CLI, OB-1, Amp, Goose, Junie, Kilo Code, OpenCode, OpenClaw, Pear AI, Roo Code, Trae, Zed, and Universal.
+`apps/web/wrangler.jsonc` 已移除上游项目的域名、数据库和限流绑定，只保留此 Fork 所需的最小 Cloudflare Workers 配置。
 
-## Features
-
-- **skills.sh integration** -- browse and search the full public catalog directly from the app
-- **Per-agent management** -- install a skill to specific agents or all of them at once, remove from one without affecting the others
-- **Built-in editor** -- view rendered skill content or edit the raw source with a CodeMirror editor, saved to disk instantly
-- **Remote servers** -- connect to other machines via SSH to browse and sync skills
-- **Private skills** -- keep skills local to your machine or share them with your team
-- **Favorites** -- star skills from the catalog for quick access
-- **Settings sync** -- desktop and TUI share preferences via a local SQLite database
-
-## TUI Keyboard Shortcuts
-
-| Key | Action |
-|-----|--------|
-| `1/2/3/4` | Switch tabs (Installed / Discover / Favorites / Servers) |
-| `j/k` | Navigate list |
-| `/` | Focus search input |
-| `Tab` | Cycle focus between panes |
-| `v` | View skill detail |
-| `e` | Toggle rendered / raw source view |
-| `i` | Install skill |
-| `d` | Remove skill |
-| `o` | Open folder or URL |
-| `m` | Toggle keyword / AI search mode |
-| `s` | Settings |
-| `?` | Help overlay |
-| `Ctrl+Q` | Quit |
-
-## Development
-
-This is a monorepo managed with npm workspaces.
-
-```
-apps/
-  web/          React Router v7 on Cloudflare Workers
-  desktop/      Electron desktop app
-
-packages/
-  cli/          Node CLI published as `skillsgate` on npm
-  tui/          Terminal UI published as `@skillsgate/tui` (Bun)
-  ui/           Shared React components
-  local-db/     Shared SQLite persistence and SSH client
-```
-
-### Running locally
+当前阶段仅供本地验收，尚未部署。后续确认版本后可运行：
 
 ```bash
-# Install dependencies
-npm install
-
-# Native desktop dependencies are rebuilt for Electron automatically.
-# If install scripts were skipped, run this before starting the desktop app:
-# npm run rebuild:native --workspace=@skillsgate/desktop
-
-# Web app (default workspace dev server)
-npm run dev
-
-# Desktop app
-cd apps/desktop && npm run dev
-
-# TUI (requires Bun)
-cd packages/tui && bun run src/index.tsx
-
-# Deploy web app to Cloudflare
 npm run deploy
 ```
 
-Requires Node.js 18+, Bun (for TUI development), and a Cloudflare account.
+## Fork 说明
 
-The desktop app uses the native `better-sqlite3` module. A normal `npm install`
-rebuilds it for the Electron version pinned by the desktop workspace. If you
-install with `--ignore-scripts` or encounter a native module ABI mismatch, run
-`npm run rebuild:native --workspace=@skillsgate/desktop` manually.
-
-## Contributing
-
-SkillsGate is open source. Contributions welcome.
-
-1. Fork the repo
-2. Create a feature branch
-3. Make your changes
-4. Open a pull request
+本仓库 Fork 自 [skillsgate/skillsgate](https://github.com/skillsgate/skillsgate)。目前复用其 Monorepo、React Router Web 应用和 Cloudflare Workers 基础；上游 Electron/TUI 代码仍保留，首版产品只开发 Website。
 
 ## License
 
-MIT
-
----
-
-<p align="center">
-  Built by Sultan Valiyev
-</p>
+仓库代码沿用上游 [MIT License](./LICENSE)。第三方 Skills 以各自目录中声明的许可为准。
