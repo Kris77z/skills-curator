@@ -55,6 +55,9 @@ yarn-error.log*
 # Apps/web specific (will also be in apps/web/.gitignore)
 # ==========================================
 
+# React Router generated types
+apps/web/.react-router/
+
 # Next.js
 apps/web/.next/
 apps/web/out/
